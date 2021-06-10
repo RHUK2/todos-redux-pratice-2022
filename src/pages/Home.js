@@ -1,62 +1,21 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { actionCount } from 'reducers/countReducer';
-import { actionTodo } from 'reducers/todoReducer';
+import React from 'react';
 import styled from 'styled-components';
 
-const TopBox = styled.div``;
+import Todo from 'components/Todo';
 
-const Home = ({ todo, addTodo, count, increaseCount, decreaseCount }) => {
-  const [text, setText] = useState('');
+const TopBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setText('');
-    addTodo(text);
-  };
-
-  const handleChange = (e) => {
-    setText(e.target.value);
-  };
-
+const Home = () => {
   return (
     <TopBox>
-      <h1>할 일</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="..."
-          value={text}
-          onChange={handleChange}
-        />
-        <button>추가</button>
-        <button onClick={increaseCount}>+</button>
-        <span>{count}</span>
-        <button onClick={decreaseCount}>-</button>
-      </form>
-      <ul>
-        {todo.map((work) => (
-          <li key={work.id}>{work.text}</li>
-        ))}
-      </ul>
+      <Todo />
     </TopBox>
   );
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const { todoReducer: todo, countReducer: count } = state;
-  return {
-    todo,
-    count,
-  };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    addTodo: (text) => dispatch(actionTodo.addTodo(text)),
-    increaseCount: () => dispatch(actionCount.increaseCount()),
-    decreaseCount: () => dispatch(actionCount.decreaseCount()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;
