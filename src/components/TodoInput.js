@@ -3,40 +3,43 @@ import { connect } from 'react-redux';
 import { actionTodo } from 'reducers/todoReducer';
 import styled from 'styled-components';
 
-const TopBox = styled.div``;
+const TodoInputContainer = styled.div``;
 
 const Title = styled.h1`
-  font-size: 50px;
+  font-size: 2rem;
   font-weight: 700;
-  padding: 20px 30px;
+  padding: 1.5rem 2rem;
   background-color: #d6a2e8;
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 `;
 
 const Form = styled.form`
   display: flex;
-  padding: 20px 30px;
+  padding: 1.5rem 2rem;
   border: 2px solid #dfe6e9;
   border-bottom: none;
 `;
 
-const InputText = styled.input`
-  padding: 5px 10px;
-  font-size: 20px;
-  outline: none;
+const InputText = styled.input.attrs((props) => {
+  return {
+    type: 'text',
+  };
+})`
   flex-grow: 1;
+  padding: 0.7rem;
+  font-size: 1.2rem;
+  outline: none;
 `;
 
 const AddBtn = styled.button`
-  width: 50px;
-  font-size: 20px;
+  width: 3rem;
+  font-size: 1.2rem;
   background-color: #a29bfe;
   border: none;
   box-shadow: inset 0px -3px rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
-  margin-left: 10px;
-  cursor: pointer;
+  border-radius: 0.5rem;
+  margin-left: 1rem;
   :hover {
     opacity: 0.9;
   }
@@ -63,20 +66,20 @@ const TodoInput = ({ todo, addTodo }) => {
   };
 
   return (
-    <TopBox>
+    <TodoInputContainer>
       <Title>Do it!</Title>
       <Form onSubmit={handleSubmit}>
         <InputText
-          type="text"
+          type
           placeholder="You can do it!!"
           value={text}
           onChange={handleChange}
         />
         <AddBtn>
-          <i class="fas fa-plus"></i>
+          <i className="fas fa-plus"></i>
         </AddBtn>
       </Form>
-    </TopBox>
+    </TodoInputContainer>
   );
 };
 

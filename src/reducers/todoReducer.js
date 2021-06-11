@@ -2,6 +2,7 @@
 const ADD = 'add';
 const DELETE = 'delete';
 const COMPLETE = 'complete';
+const PENDING = 'pending';
 
 const initValue =
   JSON.parse(localStorage.getItem('TODO')) !== null
@@ -32,6 +33,13 @@ const completeTodo = (id) => {
   };
 };
 
+const pendingTodo = (id) => {
+  return {
+    type: PENDING,
+    id,
+  };
+};
+
 const todoReducer = (state = initValue, action) => {
   switch (action.type) {
     case ADD:
@@ -50,6 +58,15 @@ const todoReducer = (state = initValue, action) => {
             }
           : { ...todo };
       });
+    case PENDING:
+      return state.map((todo) => {
+        return todo.id === action.id
+          ? {
+              ...todo,
+              finished: false,
+            }
+          : { ...todo };
+      });
     default:
       return state;
   }
@@ -59,6 +76,7 @@ export const actionTodo = {
   addTodo,
   deleteTodo,
   completeTodo,
+  pendingTodo,
 };
 
 export default todoReducer;

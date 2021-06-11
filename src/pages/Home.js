@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Todo from 'components/Todo';
 
-const TopBox = styled.div`
+const HomeContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,9 +12,9 @@ const TopBox = styled.div`
 
 const Home = () => {
   return (
-    <TopBox>
+    <HomeContainer>
       <Todo />
-    </TopBox>
+    </HomeContainer>
   );
 };
 

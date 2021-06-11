@@ -1,31 +1,28 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import TodoItem from './TodoItem';
+import TodoText from 'components/TodoText';
 
-const TopBox = styled.div`
-  padding: 20px 30px;
+const TodoContentContainer = styled.div`
+  padding: 2rem;
   border: 2px solid #dfe6e9;
-  height: 500px;
-  border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 40px;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 `;
 
 const NavList = styled.ul`
   display: flex;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  margin-bottom: 1.7rem;
 `;
 
 const NavItem = styled.li`
+  width: 48%;
   font-weight: 700;
   text-align: center;
-  padding: 10px;
-  flex-grow: 1;
+  padding: 1rem;
   cursor: pointer;
   border: 2px solid #dfe6e9;
-  :not(:last-child) {
-    margin-right: 10px;
-  }
   :hover {
     opacity: 0.9;
   }
@@ -38,7 +35,7 @@ const TodoContent = () => {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (
-    <TopBox>
+    <TodoContentContainer>
       <NavList>
         <NavItem tabIndex={tabIndex} onClick={() => setTabIndex(0)}>
           Doing
@@ -47,8 +44,8 @@ const TodoContent = () => {
           Finished
         </NavItem>
       </NavList>
-      <TodoItem tabIndex={tabIndex} />
-    </TopBox>
+      <TodoText tabIndex={tabIndex} />
+    </TodoContentContainer>
   );
 };
 

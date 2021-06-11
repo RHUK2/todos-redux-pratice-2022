@@ -4,15 +4,15 @@ import styled from 'styled-components';
 import TodoInput from 'components/TodoInput';
 import TodoContent from 'components/TodoContent';
 
-const TopBox = styled.div`
+const TodoContainer = styled.div`
   width: 500px;
 `;
 
 const Todo = () => (
-  <TopBox>
+  <TodoContainer>
     <TodoInput />
     <TodoContent />
-  </TopBox>
+  </TodoContainer>
 );
 
 export default Todo;
