@@ -3,6 +3,9 @@ const ADD = 'add';
 const DELETE = 'delete';
 const COMPLETE = 'complete';
 const PENDING = 'pending';
+const UPDATE = 'update';
+const PENDING_CLEAR = 'pending_clear';
+const COMPLETE_CLEAR = 'complete_clear';
 
 const initValue =
   JSON.parse(localStorage.getItem('TODO')) !== null
@@ -40,6 +43,26 @@ const pendingTodo = (id) => {
   };
 };
 
+const updateTodo = (id, text) => {
+  return {
+    type: UPDATE,
+    id,
+    text,
+  };
+};
+
+const pendingClearTodo = () => {
+  return {
+    type: PENDING_CLEAR,
+  };
+};
+
+const completeClearTodo = () => {
+  return {
+    type: COMPLETE_CLEAR,
+  };
+};
+
 const todoReducer = (state = initValue, action) => {
   switch (action.type) {
     case ADD:
@@ -67,6 +90,21 @@ const todoReducer = (state = initValue, action) => {
             }
           : { ...todo };
       });
+    case UPDATE:
+      return state.map((todo) => {
+        return todo.id === action.id
+          ? {
+              ...todo,
+              text: action.text,
+            }
+          : {
+              ...todo,
+            };
+      });
+    case PENDING_CLEAR:
+      return state.filter((todo) => todo.finished === true);
+    case COMPLETE_CLEAR:
+      return state.filter((todo) => todo.finished === false);
     default:
       return state;
   }
@@ -77,6 +115,9 @@ export const actionTodo = {
   deleteTodo,
   completeTodo,
   pendingTodo,
+  updateTodo,
+  pendingClearTodo,
+  completeClearTodo,
 };
 
 export default todoReducer;

@@ -67,7 +67,9 @@ const TodoInput = ({ todo, addTodo }) => {
 
   return (
     <TodoInputContainer>
-      <Title>Do it!</Title>
+      <Title>
+        Do it!{` (${todo.filter((elem) => elem.finished === false).length})`}
+      </Title>
       <Form onSubmit={handleSubmit}>
         <InputText
           type

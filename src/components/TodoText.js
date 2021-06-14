@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { actionTodo } from 'reducers/todoReducer';
 import styled from 'styled-components';
@@ -25,6 +25,20 @@ const Text = styled.span`
   word-break: break-all;
   line-height: 1.5;
 `;
+
+const Form = styled.form`
+  width: 70%;
+`;
+
+const InputText = styled.input`
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  font-size: 1rem;
+  padding-bottom: 5px;
+`;
+
 const BtnBox = styled.div`
   white-space: pre-wrap;
   width: ${({ width }) => (width ? '13%' : '22%')};
@@ -49,10 +63,17 @@ const DeleteBtn = styled(BtnIcon)`
 const PendingBtn = styled(BtnIcon)`
   color: black;
 `;
-
-const Form = styled.form``;
-
-const InputText = styled.input``;
+const AllClearBtn = styled.button`
+  margin-top: 20px;
+  border: none;
+  background-color: #e84118;
+  color: white;
+  border-radius: 1rem;
+  padding: 0.3rem 1rem;
+  :hover {
+    opacity: 0.9;
+  }
+`;
 
 const TodoText = ({
   tabIndex,
@@ -60,20 +81,43 @@ const TodoText = ({
   deleteTodo,
   completeTodo,
   pendingTodo,
+  updateTodo,
+  pendingClearTodo,
+  completeClearTodo,
 }) => {
   const [text, setText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(null);
+  const [isToggle, setIsToggle] = useState(false);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    setIsToggle(false);
+    setCurrentIndex(null);
+  }, [todo]);
+
+  const handleSubmit = (e, id) => {
     e.preventDefault();
     if (text === '') {
       return;
     }
-    // addTodo(text);
-    setText('');
+    updateTodo(id, text);
   };
 
   const handleChange = (e) => {
-    setText(e.target.value);
+    setText(e.currentTarget.value);
+  };
+
+  const handleToggle = (index, workText) => {
+    setIsToggle(!isToggle);
+    setCurrentIndex(index);
+    setText(workText);
+  };
+
+  const handleClick = () => {
+    if (tabIndex === 0) {
+      pendingClearTodo();
+    } else {
+      completeClearTodo();
+    }
   };
 
   return (
@@ -84,19 +128,22 @@ const TodoText = ({
               .filter((work) => work.finished === false)
               .map((work, index) => (
                 <TodoItem key={work.id}>
-                  <Text>{work.text}</Text>
-                  {/* <Form onSubmit={handleSubmit}>
-                    <InputText
-                      type="text"
-                      value={work.text}
-                      onChange={handleChange}
-                    />
-                  </Form> */}
+                  {currentIndex === index && isToggle ? (
+                    <Form onSubmit={(event) => handleSubmit(event, work.id)}>
+                      <InputText
+                        type="text"
+                        value={text}
+                        onChange={handleChange}
+                      />
+                    </Form>
+                  ) : (
+                    <Text>{work.text}</Text>
+                  )}
                   <BtnBox>
                     <CompleteBtn onClick={() => completeTodo(work.id)}>
                       <i className="fas fa-check"></i>
                     </CompleteBtn>
-                    <EditBtn>
+                    <EditBtn onClick={() => handleToggle(index, work.text)}>
                       <i className="fas fa-edit"></i>
                     </EditBtn>
                     <DeleteBtn onClick={() => deleteTodo(work.id)}>
@@ -123,6 +170,7 @@ const TodoText = ({
               ))
               .reverse()}
       </TodoList>
+      <AllClearBtn onClick={handleClick}>Clear</AllClearBtn>
     </TodoTextContainer>
   );
 };
@@ -139,6 +187,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     deleteTodo: (id) => dispatch(actionTodo.deleteTodo(id)),
     completeTodo: (id) => dispatch(actionTodo.completeTodo(id)),
     pendingTodo: (id) => dispatch(actionTodo.pendingTodo(id)),
+    updateTodo: (id, text) => dispatch(actionTodo.updateTodo(id, text)),
+    pendingClearTodo: () => dispatch(actionTodo.pendingClearTodo()),
+    completeClearTodo: () => dispatch(actionTodo.completeClearTodo()),
   };
 };
 
