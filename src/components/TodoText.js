@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { actionTodo } from 'reducers/todoReducer';
 import styled from 'styled-components';

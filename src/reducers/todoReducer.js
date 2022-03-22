@@ -1,4 +1,4 @@
-// action.type config
+// Action Label
 const ADD = 'add';
 const DELETE = 'delete';
 const COMPLETE = 'complete';
@@ -12,7 +12,7 @@ const initValue =
     ? JSON.parse(localStorage.getItem('TODO'))
     : [];
 
-// dispatch action object
+// Action
 const addTodo = (text) => {
   return {
     type: ADD,
@@ -21,28 +21,24 @@ const addTodo = (text) => {
     text,
   };
 };
-
 const deleteTodo = (id) => {
   return {
     type: DELETE,
     id,
   };
 };
-
 const completeTodo = (id) => {
   return {
     type: COMPLETE,
     id,
   };
 };
-
 const pendingTodo = (id) => {
   return {
     type: PENDING,
     id,
   };
 };
-
 const updateTodo = (id, text) => {
   return {
     type: UPDATE,
@@ -50,19 +46,18 @@ const updateTodo = (id, text) => {
     text,
   };
 };
-
 const pendingClearTodo = () => {
   return {
     type: PENDING_CLEAR,
   };
 };
-
 const completeClearTodo = () => {
   return {
     type: COMPLETE_CLEAR,
   };
 };
 
+// Reducer
 const todoReducer = (state = initValue, action) => {
   switch (action.type) {
     case ADD:
@@ -110,6 +105,7 @@ const todoReducer = (state = initValue, action) => {
   }
 };
 
+// Export Action
 export const actionTodo = {
   addTodo,
   deleteTodo,

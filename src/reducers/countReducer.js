@@ -1,18 +1,20 @@
+// Action Label
 const INCREASE = 'increase';
 const DECREASE = 'decrease';
 
+// Action
 const increaseCount = () => {
   return {
     type: INCREASE,
   };
 };
-
 const decreaseCount = () => {
   return {
     type: DECREASE,
   };
 };
 
+// Reducer
 const countReducer = (state = 0, action) => {
   switch (action.type) {
     case INCREASE:
@@ -24,6 +26,7 @@ const countReducer = (state = 0, action) => {
   }
 };
 
+// Export Action
 export const actionCount = {
   increaseCount,
   decreaseCount,
