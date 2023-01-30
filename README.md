@@ -1,3 +1,1 @@
-# Todos widt Redux
-
-## Pratice Redux
+# Todos Redux Pratice 2022
